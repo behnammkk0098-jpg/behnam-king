@@ -95,6 +95,13 @@
   }
   .plan-note { color: var(--muted); font-size: .78rem; margin-top: 10px; }
 
+  .apps { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+  .app {
+    direction: ltr;
+    background: rgba(0,0,0,.28); border: 1px solid var(--glass-border);
+    border-radius: 999px; padding: 8px 18px; font-size: .88rem; color: #dbe4ff;
+  }
+
   input[type="text"], textarea {
     background: rgba(0,0,0,.35); border: 1px solid var(--glass-border);
     color: var(--text); border-radius: 12px; padding: 12px 14px;
@@ -203,6 +210,20 @@
     </div>
     <div class="progress"><div class="progress-fill" id="planBar"></div></div>
     <div class="plan-note" id="planNote"></div>
+  </div>
+
+  <div class="panel">
+    <div class="plan-title">📱 قابل استفاده در</div>
+    <div class="apps">
+      <span class="app">Happ</span>
+      <span class="app">NapsternetV</span>
+      <span class="app">v2Box</span>
+      <span class="app">PattNG</span>
+      <span class="app">Clash</span>
+      <span class="app">Hiddify</span>
+      <span class="app">v2rayNG</span>
+    </div>
+    <div class="plan-note">کافیست یکی از این برنامه‌ها را نصب کنید و کانفیگ را در آن وارد (import) کنید.</div>
   </div>
 
   <div class="panel">
