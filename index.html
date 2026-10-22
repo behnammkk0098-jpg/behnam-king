@@ -361,7 +361,7 @@ var SEED_PLAN = { upload: 0, download: 0, total: 107374182400, expire: 180978160
     var total = info.total || 0;
     var remain = total > 0 ? Math.max(total - used, 0) : 0;
     set("planTotal", total > 0 ? formatBytes(total) : "—");
-    set("planUsed", live ? formatBytes(used) : "نامشخص");
+    set("planUsed", formatBytes(used));
     set("planRemain", total > 0 ? formatBytes(remain) : "—");
     var expTxt = "—", days = null;
     if (info.expire) {
@@ -373,9 +373,9 @@ var SEED_PLAN = { upload: 0, download: 0, total: 107374182400, expire: 180978160
               : days === 0 ? " (امروز منقضی می‌شود)" : " (منقضی شده)";
     }
     set("planExpire", expTxt);
-    if (bar) bar.style.width = (total > 0 && live) ? Math.min(100, (used / total) * 100) + "%" : "0%";
+    if (bar) bar.style.width = total > 0 ? Math.min(100, (used / total) * 100) + "%" : "0%";
     set("planNote", live ? "✓ اطلاعات زنده از سابسکریپشن خوانده شد"
-                         : "بر اساس مشخصات بسته — مصرف لحظه‌ای در دسترس نیست");
+                         : "🔄 به‌روزرسانی خودکار هر ۳ ساعت");
     set("chipDays", days === null ? "—" : days > 0 ? faNum(days) + " روز" : "منقضی شده");
     set("chipVol", total > 0 ? formatBytes(total) : "—");
   }
