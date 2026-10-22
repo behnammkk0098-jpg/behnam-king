@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>behnam kargar — کانفیگ‌های V2Ray</title>
+<style>
+  :root {
+    --bg: #070b16;
+    --glass: rgba(255,255,255,.045);
+    --glass-border: rgba(255,255,255,.09);
+    --text: #eef2ff;
+    --muted: #9aa7c7;
+    --accent1: #4f8cff;
+    --accent2: #a855f7;
+    --green: #34d399;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Tahoma, "IRANSans", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .bg-blob {
+    position: fixed; border-radius: 50%; filter: blur(110px);
+    opacity: .35; z-index: 0; pointer-events: none;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  .blob1 { width: 520px; height: 520px; background: #2547d6; top: -160px; right: -120px; }
+  .blob2 { width: 460px; height: 460px; background: #7c2bd6; bottom: -140px; left: -120px; animation-delay: -8s; }
+  .blob3 { width: 300px; height: 300px; background: #0e7490; top: 40%; left: 60%; animation-delay: -14s; opacity: .25; }
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(-60px,50px) scale(1.12); }
+  }
+  .wrap { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 34px 18px 70px; }
+
+  .hero { text-align: center; margin-bottom: 30px; }
+  .avatar {
+    width: 88px; height: 88px; margin: 0 auto 14px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; font-weight: 800; color: #fff; letter-spacing: 1px;
+    box-shadow: 0 0 40px rgba(120,100,255,.45);
+  }
+  .hero h1 {
+    margin: 0; font-size: 2.3rem; direction: ltr;
+    background: linear-gradient(90deg, #8fb4ff, #d3a6ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .tagline { color: var(--muted); margin: 8px 0 20px; font-size: .95rem; }
+  .info-chips { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .info-chip {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 999px; padding: 9px 20px; font-size: .88rem;
+    backdrop-filter: blur(8px); display: flex; align-items: center; gap: 8px;
+  }
+  .info-chip .lbl { color: var(--muted); font-size: .78rem; }
+  .info-chip b { color: #fff; }
+
+  .panel {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px;
+    backdrop-filter: blur(12px);
+  }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .status { color: var(--muted); font-size: .88rem; }
+  .status .ok { color: var(--green); }
+  .status .err { color: #f87171; }
+
+  .plan-title { font-weight: 700; font-size: 1.02rem; margin-bottom: 14px; }
+  .plan-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px; margin-bottom: 14px;
+  }
+  .plan-item {
+    background: rgba(0,0,0,.28); border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 10px 14px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .plan-item .lbl { color: var(--muted); font-size: .76rem; }
+  .plan-item b { font-size: .95rem; }
+  .progress {
+    height: 10px; border-radius: 999px; background: rgba(0,0,0,.35);
+    border: 1px solid var(--glass-border); overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    transition: width .6s ease;
+  }
+  .plan-note { color: var(--muted); font-size: .78rem; margin-top: 10px; }
+
+  input[type="text"], textarea {
+    background: rgba(0,0,0,.35); border: 1px solid var(--glass-border);
+    color: var(--text); border-radius: 12px; padding: 12px 14px;
+    font-size: .92rem; font-family: inherit;
+  }
+  input[type="text"] { direction: ltr; text-align: left; }
+  input::placeholder { color: #5b6a8c; }
+  input:focus, textarea:focus {
+    outline: none; border-color: var(--accent1);
+    box-shadow: 0 0 0 3px rgba(79,140,255,.18);
+  }
+  button {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff; border: none; border-radius: 12px;
+    padding: 12px 24px; font-size: .92rem; font-family: inherit; cursor: pointer;
+    box-shadow: 0 4px 18px rgba(90,110,255,.35);
+    transition: transform .12s, box-shadow .12s; white-space: nowrap;
+  }
+  button:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(90,110,255,.5); }
+  button.ghost {
+    background: var(--glass); border: 1px solid var(--glass-border); box-shadow: none;
+  }
+  button.ghost:hover { background: rgba(255,255,255,.09); }
+  button:disabled { opacity: .5; cursor: default; transform: none; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    background: var(--glass); border: 1px solid var(--glass-border); color: var(--muted);
+    border-radius: 999px; padding: 7px 15px; font-size: .8rem; box-shadow: none;
+  }
+  .chip.active {
+    background: linear-gradient(135deg, rgba(79,140,255,.25), rgba(168,85,247,.25));
+    border-color: var(--accent1); color: #fff;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: var(--radius); padding: 16px;
+    display: flex; flex-direction: column; gap: 9px;
+    backdrop-filter: blur(10px);
+    transition: transform .15s, border-color .15s;
+    animation: fadeUp .35s ease both;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(140,160,255,.35); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  .card .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .badge {
+    background: linear-gradient(135deg, rgba(79,140,255,.3), rgba(168,85,247,.3));
+    border: 1px solid rgba(140,160,255,.4); color: #c9d8ff;
+    font-size: .72rem; padding: 4px 12px; border-radius: 999px; direction: ltr;
+  }
+  .card .name {
+    font-weight: 700; font-size: 1rem;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .card .addr {
+    color: var(--muted); font-size: .8rem;
+    direction: ltr; text-align: right; font-family: monospace;
+  }
+  .card .actions { display: flex; gap: 8px; margin-top: 4px; }
+  .card .actions button { flex: 1; padding: 9px; font-size: .82rem; }
+  .empty { text-align: center; color: var(--muted); padding: 44px 10px; }
+  .manual { display: none; margin-top: 12px; }
+  .manual textarea { width: 100%; min-height: 110px; resize: vertical; }
+  .manual .row { margin-top: 10px; justify-content: flex-start; }
+  footer { text-align: center; color: var(--muted); font-size: .78rem; margin-top: 34px; }
+  .toast {
+    position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
+    background: rgba(20,28,52,.92); border: 1px solid var(--accent1);
+    color: var(--text); padding: 11px 24px; border-radius: 999px;
+    font-size: .88rem; opacity: 0; transition: opacity .25s; pointer-events: none;
+    backdrop-filter: blur(8px); z-index: 5;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="bg-blob blob1"></div>
+<div class="bg-blob blob2"></div>
+<div class="bg-blob blob3"></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="avatar">BK</div>
+    <h1>behnam kargar</h1>
+    <p class="tagline">🚀 کانفیگ‌های V2Ray — همیشه به‌روز</p>
+    <div class="info-chips">
+      <div class="info-chip">📅 <span class="lbl">باقی‌مانده بسته</span> <b id="chipDays">…</b></div>
+      <div class="info-chip">📦 <span class="lbl">حجم کل</span> <b id="chipVol">…</b></div>
+      <div class="info-chip">🖥️ <span class="lbl">سرورها</span> <b id="configCount">…</b></div>
+    </div>
+  </header>
+
+  <div class="panel">
+    <div class="plan-title">📊 مشخصات بسته</div>
+    <div class="plan-grid">
+      <div class="plan-item"><span class="lbl">حجم کل</span><b id="planTotal">…</b></div>
+      <div class="plan-item"><span class="lbl">مصرف‌شده</span><b id="planUsed">…</b></div>
+      <div class="plan-item"><span class="lbl">باقی‌مانده حجم</span><b id="planRemain">…</b></div>
+      <div class="plan-item"><span class="lbl">تاریخ انقضا</span><b id="planExpire">…</b></div>
+    </div>
+    <div class="progress"><div class="progress-fill" id="planBar"></div></div>
+    <div class="plan-note" id="planNote"></div>
+  </div>
+
+  <div class="panel">
+    <div class="row">
+      <div class="status" id="status">در حال بارگذاری…</div>
+      <button id="refreshBtn">🔄 به‌روزرسانی</button>
+    </div>
+    <div class="manual" id="manualBox">
+      <p style="color:var(--muted);font-size:.85rem">دریافت خودکار ممکن نشد (ارائه‌دهنده لینک، اجازه دسترسی به مرورگر نمی‌دهد).<br>راه حل: لینک سابت را در مرورگر باز کن، کل متن کانفیگ‌ها را کپی کن و اینجا بچسبان:</p>
+      <textarea id="manualText" placeholder="vmess://…&#10;vless://…"></textarea>
+      <div class="row"><button id="manualBtn">پردازش متن</button></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input id="search" type="text" placeholder="🔍 جستجو…" style="max-width:220px">
+    <div class="chips" id="chips"></div>
+    <div style="flex:1"></div>
+    <button class="ghost" id="copyAllBtn">📋 کپی همه</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">هنوز کانفیگی بارگذاری نشده است.</div>
+
+  <footer>behnam kargar • خودکار از سابسکریپشن به‌روز می‌شود 💜</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+/* ============================================================
+   لینک سابسکریپشن پیش‌فرض (در سایت نمایش داده نمی‌شود):
+   ============================================================ */
+var DEFAULT_SUB_URL = "https://oxzq7ie4uars.60zf3uefujts.workers.dev/feed/Ayaz";
+
+/* مشخصات ثابت بسته — از هدر subscription-userinfo لینک ساب (خوانده‌شده در ۱۴۰۵/۰۸/۰۱):
+   total و expire ثابت‌اند و روزشمار زنده حساب می‌شود؛ مصرف لحظه‌ای فقط وقتی
+   هدر مستقیم خوانده شود به‌روز است. */
+var SEED_PLAN = { upload: 0, download: 0, total: 107374182400, expire: 1809781608 };
+
+(function () {
+  "use strict";
+  var configs = [];
+  var activeProto = "all";
+  var query = "";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var grid = $("grid"), empty = $("empty"), status = $("status"),
+      chipsBox = $("chips");
+
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(function () { t.classList.remove("show"); }, 1800);
+  }
+
+  function copyText(text, okMsg) {
+    var done = function () { toast(okMsg || "کپی شد ✓"); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); }
+    catch (e) { toast("کپی نشد!"); }
+    document.body.removeChild(ta);
+  }
+
+  function setStatus(html) { status.innerHTML = html; }
+
+  function faNum(n) {
+    try { return Number(n).toLocaleString("fa-IR"); } catch (e) { return String(n); }
+  }
+
+  function formatBytes(b) {
+    b = Number(b) || 0;
+    if (b <= 0) return "۰";
+    var units = ["بایت", "کیلوبایت", "مگابایت", "گیگابایت", "ترابایت"];
+    var i = Math.floor(Math.log(b) / Math.log(1024));
+    if (i > 4) i = 4;
+    var v = b / Math.pow(1024, i);
+    var s = v >= 100 ? String(Math.round(v)) : String(Math.round(v * 10) / 10);
+    return faNum(s) + " " + units[i];
+  }
+
+  /* هدر subscription-userinfo را به شکل upload=..; download=..; total=..; expire=.. تجزیه می‌کند */
+  function parseUserinfo(h) {
+    if (!h) return null;
+    var o = {};
+    String(h).split(";").forEach(function (part) {
+      var kv = part.split("=");
+      if (kv.length === 2) o[kv[0].trim().toLowerCase()] = parseInt(kv[1].trim(), 10) || 0;
+    });
+    if (!o.total && !o.expire) return null;
+    return o;
+  }
+
+  /* پنل «مشخصات بسته» و چیپ‌های بالای صفحه را به‌روز می‌کند.
+     live=true یعنی اطلاعات زنده از هدر خوانده شده؛ در غیر این صورت از مقادیر ثابت. */
+  function renderPlan(info, live) {
+    var set = function (id, txt) { var el = $(id); if (el) el.textContent = txt; };
+    var bar = $("planBar");
+    if (!info) {
+      set("planTotal", "—"); set("planUsed", "—");
+      set("planRemain", "—"); set("planExpire", "—");
+      set("planNote", "ارائه‌دهنده لینک، اطلاعات بسته را ارسال نکرده است.");
+      set("chipDays", "—"); set("chipVol", "—");
+      if (bar) bar.style.width = "0%";
+      return;
+    }
+    var used = (info.upload || 0) + (info.download || 0);
+    var total = info.total || 0;
+    var remain = total > 0 ? Math.max(total - used, 0) : 0;
+    set("planTotal", total > 0 ? formatBytes(total) : "—");
+    set("planUsed", live ? formatBytes(used) : "نامشخص");
+    set("planRemain", total > 0 ? formatBytes(remain) : "—");
+    var expTxt = "—", days = null;
+    if (info.expire) {
+      var d = new Date(info.expire * 1000);
+      try { expTxt = d.toLocaleDateString("fa-IR", { year: "numeric", month: "long", day: "numeric" }); }
+      catch (e) { expTxt = d.toDateString(); }
+      days = Math.ceil((info.expire * 1000 - Date.now()) / 86400000);
+      expTxt += days > 0 ? " (" + faNum(days) + " روز مانده)"
+              : days === 0 ? " (امروز منقضی می‌شود)" : " (منقضی شده)";
+    }
+    set("planExpire", expTxt);
+    if (bar) bar.style.width = (total > 0 && live) ? Math.min(100, (used / total) * 100) + "%" : "0%";
+    set("planNote", live ? "✓ اطلاعات زنده از سابسکریپشن خوانده شد"
+                         : "بر اساس مشخصات بسته — مصرف لحظه‌ای در دسترس نیست");
+    set("chipDays", days === null ? "—" : days > 0 ? faNum(days) + " روز" : "منقضی شده");
+    set("chipVol", total > 0 ? formatBytes(total) : "—");
+  }
+
+  function render() {
+    var list = configs.filter(function (c) {
+      var okProto = activeProto === "all" || c.proto === activeProto;
+      var okQ = !query || (c.name + " " + c.host).toLowerCase().indexOf(query) !== -1;
+      return okProto && okQ;
+    });
+
+    grid.innerHTML = "";
+    empty.style.display = list.length ? "none" : "block";
+
+    list.forEach(function (c) {
+      var card = document.createElement("div");
+      card.className = "card";
+
+      var top = document.createElement("div");
+      top.className = "top";
+      var badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = protoLabel(c.proto);
+      top.appendChild(badge);
+
+      var name = document.createElement("div");
+      name.className = "name";
+      name.textContent = c.name;
+      name.title = c.name;
+
+      var addr = document.createElement("div");
+      addr.className = "addr";
+      addr.textContent = c.host + (c.port ? ":" + c.port : "");
+
+      var actions = document.createElement("div");
+      actions.className = "actions";
+      var copyBtn = document.createElement("button");
+      copyBtn.textContent = "📋 کپی کانفیگ";
+      copyBtn.onclick = function () { copyText(c.uri); };
+      actions.appendChild(copyBtn);
+
+      card.appendChild(top);
+      card.appendChild(name);
+      card.appendChild(addr);
+      card.appendChild(actions);
+      grid.appendChild(card);
+    });
+
+    renderChips();
+  }
+
+  function renderChips() {
+    var protos = [];
+    configs.forEach(function (c) {
+      if (protos.indexOf(c.proto) === -1) protos.push(c.proto);
+    });
+    protos.sort();
+    chipsBox.innerHTML = "";
+    var all = [{ p: "all", l: "همه (" + faNum(configs.length) + ")" }].concat(
+      protos.map(function (p) {
+        var n = configs.filter(function (c) { return c.proto === p; }).length;
+        return { p: p, l: protoLabel(p) + " (" + faNum(n) + ")" };
+      })
+    );
+    all.forEach(function (it) {
+      var b = document.createElement("button");
+      b.className = "chip" + (activeProto === it.p ? " active" : "");
+      b.textContent = it.l;
+      b.onclick = function () { activeProto = it.p; render(); };
+      chipsBox.appendChild(b);
+    });
+  }
+
+  function applyConfigs(list, sourceNote) {
+    configs = list;
+    var cc = $("configCount");
+    if (cc) cc.textContent = list.length ? faNum(list.length) + " سرور" : "—";
+    var t = new Date().toLocaleString("fa-IR");
+    if (list.length) {
+      setStatus('<span class="ok">✓ ' + faNum(list.length) + ' کانفیگ بارگذاری شد</span> — آخرین به‌روزرسانی: ' + t + (sourceNote || ""));
+      $("manualBox").style.display = "none";
+    } else {
+      setStatus('<span class="err">کانفیگی پیدا نشد.</span>');
+    }
+    render();
+  }
+
+  function loadFromText(text) {
+    var list = parseSubscription(text);
+    applyConfigs(list);
+    renderPlan(null, false);
+  }
+
+  function loadFromUrl(url) {
+    var isDefault = url === DEFAULT_SUB_URL;
+    if (!url) {
+      setStatus('<span class="err">سابسکریپشن تنظیم نشده است.</span>');
+      $("manualBox").style.display = "block";
+      renderPlan(null, false);
+      return;
+    }
+    setStatus("در حال دریافت کانفیگ‌ها…");
+    fetch(url, { cache: "no-store" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        var info = parseUserinfo(r.headers.get("subscription-userinfo"));
+        var live = !!info;
+        if (!info && isDefault) info = SEED_PLAN;
+        renderPlan(info, live);
+        return r.text();
+      })
+      .then(function (text) {
+        var list = parseSubscription(text);
+        if (list.length) {
+          applyConfigs(list);
+        } else {
+          setStatus('<span class="err">پاسخی دریافت شد ولی کانفیگی در آن نبود.</span> می‌توانید متن را دستی بچسبانید:');
+          $("manualBox").style.display = "block";
+          render();
+        }
+      })
+      .catch(function () {
+        setStatus('<span class="err">دریافت خودکار ممکن نشد.</span> متن سابسکریپشن را دستی بچسبانید:');
+        $("manualBox").style.display = "block";
+        renderPlan(isDefault ? SEED_PLAN : null, false);
+      });
+  }
+
+  function refresh() {
+    loadFromUrl(DEFAULT_SUB_URL);
+  }
+
+  $("refreshBtn").onclick = refresh;
+  $("manualBtn").onclick = function () { loadFromText($("manualText").value); };
+  $("search").addEventListener("input", function (e) {
+    query = e.target.value.trim().toLowerCase();
+    render();
+  });
+  $("copyAllBtn").onclick = function () {
+    if (!configs.length) { toast("کانفیگی نیست!"); return; }
+    copyText(configs.map(function (c) { return c.uri; }).join("\n"), faNum(configs.length) + " کانفیگ کپی شد ✓");
+  };
+
+  // init — لینک ساب در صفحه نمایش داده نمی‌شود
+  if (DEFAULT_SUB_URL) {
+    loadFromUrl(DEFAULT_SUB_URL);
+  } else {
+    setStatus("سابسکریپشن تنظیم نشده است.");
+    empty.style.display = "block";
+    $("manualBox").style.display = "block";
+  }
+})();
+</script>
+</body>
+</html>
