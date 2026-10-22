@@ -275,6 +275,19 @@ var SEED_PLAN = { upload: 0, download: 0, total: 107374182400, expire: 180978160
   var grid = $("grid"), empty = $("empty"), status = $("status"),
       chipsBox = $("chips");
 
+  /* قانون تغییر اسم نمایشی کانفیگ‌ها:
+     اسم‌های تکراری «ZEUS | 🇺🇸 | Ayaz» به شکل «<ایموجی> Behnam 🇺🇸 <شماره>» نمایش داده می‌شوند.
+     ایموجی بر اساس شماره ثابت انتخاب می‌شود تا با هر بارگذاری عوض نشود. */
+  var RENAME_FROM = "ZEUS | 🇺🇸 | Ayaz";
+  var NAME_EMOJIS = ["🚀","🔥","⚡","💎","🌟","🎯","💪","👑","⭐","🏆","🛡️","🌊","🔮","🎵","🎲","🌈"];
+
+  function displayName(c, num) {
+    if (c.name === RENAME_FROM) {
+      return NAME_EMOJIS[(num - 1) % NAME_EMOJIS.length] + " Behnam 🇺🇸 " + faNum(num);
+    }
+    return c.name;
+  }
+
   function toast(msg) {
     var t = $("toast");
     t.textContent = msg;
@@ -370,7 +383,7 @@ var SEED_PLAN = { upload: 0, download: 0, total: 107374182400, expire: 180978160
   function render() {
     var list = configs.filter(function (c) {
       var okProto = activeProto === "all" || c.proto === activeProto;
-      var okQ = !query || (c.name + " " + c.host).toLowerCase().indexOf(query) !== -1;
+      var okQ = !query || ((c.display || c.name) + " " + c.host).toLowerCase().indexOf(query) !== -1;
       return okProto && okQ;
     });
 
@@ -390,8 +403,8 @@ var SEED_PLAN = { upload: 0, download: 0, total: 107374182400, expire: 180978160
 
       var name = document.createElement("div");
       name.className = "name";
-      name.textContent = c.name;
-      name.title = c.name;
+      name.textContent = c.display || c.name;
+      name.title = c.display || c.name;
 
       var addr = document.createElement("div");
       addr.className = "addr";
@@ -438,6 +451,11 @@ var SEED_PLAN = { upload: 0, download: 0, total: 107374182400, expire: 180978160
 
   function applyConfigs(list, sourceNote) {
     configs = list;
+    var n = 0;
+    configs.forEach(function (c) {
+      if (c.name === RENAME_FROM) { n++; c.display = displayName(c, n); }
+      else { c.display = c.name; }
+    });
     var cc = $("configCount");
     if (cc) cc.textContent = list.length ? faNum(list.length) + " سرور" : "—";
     var t = new Date().toLocaleString("fa-IR");
