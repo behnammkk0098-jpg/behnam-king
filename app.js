@@ -170,14 +170,13 @@ function parseConfigLine(uri) {
   return { proto: proto, name: label, host: host, port: port, uri: uri };
 }
 
-/* Promo/advertisement entries the user asked to hide from the site. */
-function isPromoConfig(c) {
-  return /پنل رایگان|PANEL_ZEUS/i.test(c.name || "");
-}
+/* Only real server configs are shown; everything else (promos, info lines)
+   is hidden per the user's request. */
+var KEEP_NAME = "ZEUS | 🇺🇸 | Ayaz";
 
 /* Parse a whole subscription response into config objects. */
 function parseSubscription(raw) {
   return extractConfigLines(raw)
     .map(parseConfigLine)
-    .filter(function (c) { return c !== null && !isPromoConfig(c); });
+    .filter(function (c) { return c !== null && c.name === KEEP_NAME; });
 }
