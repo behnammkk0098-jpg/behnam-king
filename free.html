@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>behnam kargar — کانفیگ‌های رایگان</title>
+<style>
+  :root {
+    --bg: #070b16;
+    --glass: rgba(255,255,255,.045);
+    --glass-border: rgba(255,255,255,.09);
+    --text: #eef2ff;
+    --muted: #9aa7c7;
+    --accent1: #4f8cff;
+    --accent2: #a855f7;
+    --green: #34d399;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Tahoma, "IRANSans", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .bg-blob {
+    position: fixed; border-radius: 50%; filter: blur(110px);
+    opacity: .35; z-index: 0; pointer-events: none;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  .blob1 { width: 520px; height: 520px; background: #2547d6; top: -160px; right: -120px; }
+  .blob2 { width: 460px; height: 460px; background: #7c2bd6; bottom: -140px; left: -120px; animation-delay: -8s; }
+  .blob3 { width: 300px; height: 300px; background: #0e7490; top: 40%; left: 60%; animation-delay: -14s; opacity: .25; }
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(-60px,50px) scale(1.12); }
+  }
+  .wrap { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 34px 18px 70px; }
+
+  .hero { text-align: center; margin-bottom: 26px; }
+  .avatar {
+    width: 88px; height: 88px; margin: 0 auto 14px; border-radius: 50%;
+    background: linear-gradient(135deg, #34d399, #4f8cff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 0 40px rgba(52,211,153,.35);
+  }
+  .hero h1 {
+    margin: 0; font-size: 2rem;
+    background: linear-gradient(90deg, #8fb4ff, #d3a6ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .tagline { color: var(--muted); margin: 8px 0 4px; font-size: .95rem; }
+  .back-link { display: inline-block; margin-top: 10px; color: var(--accent1); font-size: .85rem; text-decoration: none; }
+
+  .panel {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 20px;
+    backdrop-filter: blur(12px);
+  }
+  .panel-title { font-weight: 700; font-size: 1.02rem; margin-bottom: 12px; }
+  .notice {
+    font-size: .85rem; color: var(--muted); line-height: 1.9;
+    background: rgba(251,191,36,.07); border: 1px solid rgba(251,191,36,.25);
+    border-radius: 12px; padding: 10px 14px;
+  }
+  .notice b { color: #fbbf24; }
+
+  .sub-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 10px 4px; border-bottom: 1px solid rgba(255,255,255,.06);
+    font-size: .88rem;
+  }
+  .sub-row:last-child { border-bottom: none; }
+  .sub-name { display: flex; align-items: center; gap: 8px; }
+  .proto {
+    font-size: .7rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+    background: rgba(79,140,255,.15); color: #8fb4ff; border: 1px solid rgba(79,140,255,.3);
+    direction: ltr; white-space: nowrap;
+  }
+  .proto.vless { background: rgba(52,211,153,.12); color: #6ee7b7; border-color: rgba(52,211,153,.3); }
+  .proto.vmess { background: rgba(168,85,247,.12); color: #c4a5fd; border-color: rgba(168,85,247,.3); }
+  .proto.trojan { background: rgba(251,113,133,.12); color: #fda4af; border-color: rgba(251,113,133,.3); }
+  .proto.ss { background: rgba(251,191,36,.12); color: #fcd34d; border-color: rgba(251,191,36,.3); }
+  .proto.hy2 { background: rgba(45,212,191,.12); color: #5eead4; border-color: rgba(45,212,191,.3); }
+
+  .btn {
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    color: #fff; border: none; border-radius: 12px; padding: 8px 18px;
+    font-size: .85rem; cursor: pointer; font-family: inherit; white-space: nowrap;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn.ghost {
+    background: rgba(255,255,255,.06); border: 1px solid var(--glass-border);
+  }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  .search {
+    flex: 1; min-width: 180px; background: rgba(255,255,255,.05);
+    border: 1px solid var(--glass-border); border-radius: 12px;
+    padding: 9px 14px; color: var(--text); font-family: inherit; font-size: .88rem;
+  }
+  .search::placeholder { color: var(--muted); }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .chip {
+    font-size: .78rem; padding: 6px 14px; border-radius: 999px; cursor: pointer;
+    background: rgba(255,255,255,.05); border: 1px solid var(--glass-border); color: var(--muted);
+  }
+  .chip.active { background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #fff; border-color: transparent; }
+
+  .status { color: var(--muted); font-size: .85rem; margin: 6px 0 12px; }
+  .status .ok { color: var(--green); }
+  .status .err { color: #f87171; }
+
+  .cfg {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07);
+    border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; font-size: .85rem;
+  }
+  .cfg .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: ltr; text-align: right; }
+  .cfg .copy { font-size: .75rem; padding: 6px 12px; }
+  .empty { text-align: center; color: var(--muted); padding: 30px 0; font-size: .9rem; }
+  .footer { text-align: center; color: var(--muted); font-size: .75rem; margin-top: 30px; }
+</style>
+</head>
+<body>
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+  <div class="bg-blob blob3"></div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="avatar">🎁</div>
+      <h1>کانفیگ‌های رایگان</h1>
+      <p class="tagline">از منابع عمومی به‌روز — هر ساعت تازه‌سازی می‌شن</p>
+      <a class="back-link" href="./">→ بازگشت به صفحه اصلی</a>
+    </div>
+
+    <div class="panel">
+      <div class="notice">
+        <b>⚠️ توجه:</b> این کانفیگ‌ها از منابع <b>عمومی و رایگان</b> اینترنت جمع‌آوری می‌شن.
+        ممکنه ناپایدار باشن، سرعتشون تضمینی نیست و هر لحظه از کار بیفتن.
+        اگه یکیش وصل نشد، یکیش دیگه رو امتحان کن.
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">🔗 لینک سابسکریپشن (برای اپ‌هایی مثل v2rayNG و Hiddify)</div>
+      <div style="font-size:.82rem;color:var(--muted);margin-bottom:10px;line-height:1.9">
+        این لینک رو توی اپ کپی کن (بخش Subscription) تا خودش خودکار لیست سرورها رو بگیره و به‌روز نگه داره:
+      </div>
+      <div id="subLinks"></div>
+    </div>
+
+    <div class="panel">
+      <div class="row" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+        <div class="panel-title" style="margin:0">📋 لیست کانفیگ‌ها <span id="cfgCount" style="color:var(--muted);font-weight:400;font-size:.85rem"></span></div>
+        <button class="btn ghost" id="refreshBtn" onclick="loadAll()">🔄 بروزرسانی</button>
+      </div>
+      <div class="toolbar">
+        <input class="search" id="searchBox" placeholder="🔍 جستجو توی اسم سرورها..." oninput="render()">
+      </div>
+      <div class="chips" id="protoChips"></div>
+      <div class="status" id="status">در حال دریافت کانفیگ‌ها...</div>
+      <div id="cfgList"></div>
+    </div>
+
+    <div class="footer">behnam kargar • کانفیگ‌های رایگان از منابع عمومی</div>
+  </div>
+
+<script>
+const SOURCES = [
+  { label: "میکس همه پروتکل‌ها", proto: "mix",
+    url: "https://raw.githubusercontent.com/Au1rxx/free-vpn-subscriptions/main/output/v2ray-base64.txt" },
+  { label: "VLESS", proto: "vless",
+    url: "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/filtered/subs/vless.txt" },
+  { label: "VMess", proto: "vmess",
+    url: "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/filtered/subs/vmess.txt" },
+  { label: "Trojan", proto: "trojan",
+    url: "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/filtered/subs/trojan.txt" },
+  { label: "Shadowsocks", proto: "ss",
+    url: "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/filtered/subs/ss.txt" },
+  { label: "Hysteria2", proto: "hy2",
+    url: "https://raw.githubusercontent.com/MatinGhanbari/v2ray-configs/main/subscriptions/filtered/subs/hysteria2.txt" },
+];
+
+const PROTO_RE = /^(vless|vmess|trojan|ss|hy2|hysteria2|tuic):\/\//i;
+let allConfigs = [];
+let activeProto = "all";
+
+function b64ToUtf8(b64) {
+  const bin = atob(b64.replace(/\s+/g, ""));
+  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+function extractUris(text) {
+  let lines = [];
+  const clean = text.trim().replace(/\s+/g, "");
+  if (/^[A-Za-z0-9+/=]+$/.test(clean) && clean.length > 100) {
+    try {
+      const decoded = b64ToUtf8(clean);
+      if (PROTO_RE.test(decoded) || decoded.includes("://")) lines = decoded.split(/\r?\n/);
+    } catch (e) { /* not base64 */ }
+  }
+  if (!lines.length) lines = text.split(/\r?\n/);
+  return lines.map(l => l.trim()).filter(l => PROTO_RE.test(l));
+}
+
+function parseName(uri) {
+  const hash = uri.indexOf("#");
+  if (hash === -1) return uri.slice(0, 40) + "…";
+  const frag = uri.slice(hash + 1);
+  try { return decodeURIComponent(frag); }
+  catch (e) { return frag; }
+}
+
+function parseProto(uri) {
+  const m = uri.match(/^([a-z0-9]+):\/\//i);
+  return m ? m[1].toLowerCase() : "?";
+}
+
+async function loadAll() {
+  const status = document.getElementById("status");
+  const list = document.getElementById("cfgList");
+  status.innerHTML = "در حال دریافت کانفیگ‌ها...";
+  list.innerHTML = "";
+  const seen = new Set();
+  const cfgs = [];
+  let ok = 0, fail = 0;
+
+  await Promise.all(SOURCES.map(async (s) => {
+    try {
+      const r = await fetch(s.url, { cache: "no-store" });
+      if (!r.ok) throw new Error(r.status);
+      const uris = extractUris(await r.text());
+      for (const u of uris) {
+        if (seen.has(u)) continue;
+        seen.add(u);
+        cfgs.push({ uri: u, name: parseName(u), proto: parseProto(u) });
+      }
+      ok++;
+    } catch (e) { fail++; }
+  }));
+
+  allConfigs = cfgs;
+  const now = new Date().toLocaleString("fa-IR");
+  if (ok === 0) {
+    status.innerHTML = '<span class="err">❌ دریافت ناموفق بود — اتصال اینترنت / VPN رو چک کن و دوباره تلاش کن.</span>';
+  } else {
+    status.innerHTML = `<span class="ok">✅ ${cfgs.length} کانفیگ از ${ok} منبع دریافت شد</span> • آخرین بروزرسانی: ${now}` +
+      (fail ? ` • <span class="err">${fail} منبع خطا داشت</span>` : "");
+  }
+  buildChips();
+  render();
+}
+
+function buildChips() {
+  const protos = ["all", ...new Set(allConfigs.map(c => c.proto))];
+  const labels = { all: "همه", vless: "VLESS", vmess: "VMess", trojan: "Trojan", ss: "SS", hy2: "Hysteria2", hysteria2: "Hysteria2", tuic: "TUIC" };
+  document.getElementById("protoChips").innerHTML = protos.map(p =>
+    `<div class="chip ${p === activeProto ? "active" : ""}" onclick="setProto('${p}')">${labels[p] || p}</div>`
+  ).join("");
+}
+
+function setProto(p) { activeProto = p; buildChips(); render(); }
+
+function render() {
+  const q = document.getElementById("searchBox").value.trim().toLowerCase();
+  const list = document.getElementById("cfgList");
+  const filtered = allConfigs.filter(c =>
+    (activeProto === "all" || c.proto === activeProto) &&
+    (!q || c.name.toLowerCase().includes(q) || c.uri.toLowerCase().includes(q))
+  );
+  document.getElementById("cfgCount").textContent = filtered.length ? `(${filtered.length})` : "";
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty">کانفیگی پیدا نشد 😕</div>';
+    return;
+  }
+  const protoCls = { vless: "vless", vmess: "vmess", trojan: "trojan", ss: "ss", hy2: "hy2", hysteria2: "hy2" };
+  list.innerHTML = filtered.slice(0, 500).map((c, i) =>
+    `<div class="cfg">
+       <span class="proto ${protoCls[c.proto] || ""}">${c.proto.toUpperCase()}</span>
+       <span class="name">${escapeHtml(c.name)}</span>
+       <button class="btn copy" onclick="copyCfg(${i})">کپی</button>
+     </div>`
+  ).join("") + (filtered.length > 500 ? `<div class="empty">و ${filtered.length - 500} مورد دیگه... جستجو کن تا پیداشون کنی 🔍</div>` : "");
+  list._data = filtered.slice(0, 500);
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function copyCfg(i) {
+  const c = document.getElementById("cfgList")._data[i];
+  navigator.clipboard.writeText(c.uri).then(() => {
+    const btns = document.querySelectorAll("#cfgList .copy");
+    if (btns[i]) { btns[i].textContent = "✅ شد!"; setTimeout(() => btns[i].textContent = "کپی", 1500); }
+  });
+}
+
+function copySub(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    btn.textContent = "✅ شد!";
+    setTimeout(() => btn.textContent = "کپی لینک", 1500);
+  });
+}
+
+document.getElementById("subLinks").innerHTML = SOURCES.map((s, i) =>
+  `<div class="sub-row">
+     <div class="sub-name"><span class="proto ${s.proto === "vless" ? "vless" : s.proto === "vmess" ? "vmess" : s.proto === "trojan" ? "trojan" : s.proto === "ss" ? "ss" : s.proto === "hy2" ? "hy2" : ""}">${s.label}</span></div>
+     <button class="btn" onclick="copySub('${s.url}', this)">کپی لینک</button>
+   </div>`
+).join("");
+
+loadAll();
+</script>
+</body>
+</html>
